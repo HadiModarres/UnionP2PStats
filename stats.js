@@ -6,8 +6,9 @@ class Stats {
     }
 
     searchStarted(id,sourceNodeId,query){
-        if (this.__searchObjectFor(id))
-            return ;
+        this.searches = [];
+        // if (this.__searchObjectFor(id))
+        //     return ;
        let newSearch = {};
        newSearch.id= id;
        newSearch.sourceId = sourceNodeId;
