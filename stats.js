@@ -6,6 +6,8 @@ class Stats {
     }
 
     searchStarted(id,sourceNodeId,query){
+        if (this.__searchObjectFor(id))
+            return ;
        let newSearch = {};
        newSearch.id= id;
        newSearch.sourceId = sourceNodeId;
@@ -20,6 +22,7 @@ class Stats {
         let searchObj = this.__searchObjectFor(id);
         if (!searchObj){
             console.error("search object doesnt exist");
+            return;
         }
         searchObj.relays++ ;
     }
@@ -28,6 +31,7 @@ class Stats {
         let searchObj = this.__searchObjectFor(id);
         if (!searchObj){
             console.error("search object doesnt exist");
+            return;
         }
         searchObj.revisits++ ;
     }
@@ -36,6 +40,7 @@ class Stats {
         let searchObj = this.__searchObjectFor(id);
         if (!searchObj){
             console.error("search object doesnt exist");
+            return;
         }
         searchObj.responses++ ;
     }
@@ -43,6 +48,7 @@ class Stats {
         let searchObj = this.__searchObjectFor(id);
         if (!searchObj){
             console.error("search object doesnt exist");
+            return;
         }
         searchObj.discarded++ ;
     }
