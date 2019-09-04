@@ -1,0 +1,13 @@
+extends layout
+
+block content
+  h1= "search stats:"
+  each val in stats
+    h2 Stats for search: #{val.id}
+    p query: #{val.query}
+    p originating node id: #{val.sourceId}
+    p relays count: #{val.relays}
+    p revisit count: #{val.revisits}
+    p response count: #{val.responses}
+    p discarded count: #{val.discarded}
+
