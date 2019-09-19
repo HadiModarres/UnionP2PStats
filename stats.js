@@ -1,70 +1,60 @@
 class Stats {
 
     constructor(){
-       this.searches = [];
-
+       this.lastSearch = [];
+       this.nodes = {};
     }
 
-    searchStarted(id,sourceNodeId,query){
-        this.searches = [];
-        // if (this.__searchObjectFor(id))
-        //     return ;
-       let newSearch = {};
-       newSearch.id= id;
-       newSearch.sourceId = sourceNodeId;
-       newSearch.query = query;
-       newSearch.relays = 0;
-       newSearch.revisits = 0 ;
-       newSearch.responses = 0;
-       newSearch.discarded = 0;
-        this.searches.push(newSearch);
+    neighborsUpdated(node){
+        this.nodes[node.id] = node;
+        // console.info(this.nodes);
     }
-    searchRelayed(id){
-        let searchObj = this.__searchObjectFor(id);
-        if (!searchObj){
-            console.error("search object doesnt exist");
-            return;
-        }
-        searchObj.relays++ ;
-    }
-    searchRevisited(id){
-
-        let searchObj = this.__searchObjectFor(id);
-        if (!searchObj){
-            console.error("search object doesnt exist");
-            return;
-        }
-        searchObj.revisits++ ;
-    }
-    searchResponded(id){
-
-        let searchObj = this.__searchObjectFor(id);
-        if (!searchObj){
-            console.error("search object doesnt exist");
-            return;
-        }
-        searchObj.responses++ ;
-    }
-    searchDiscarded(id){
-        let searchObj = this.__searchObjectFor(id);
-        if (!searchObj){
-            console.error("search object doesnt exist");
-            return;
-        }
-        searchObj.discarded++ ;
+    getNodes(){
+        return Object.values(this.nodes);
     }
 
-    __searchObjectFor(id){
-       for (let search of this.searches){
-          if (search.id ===id){
-              return search;
-          }
+    initSearchObj(id){
+        this.lastSearch = {
+            id: id
+            , query: '',
+            stats:[]
+        };
+    }
+
+    searchStarted(id,sourceName,query) {
+        if (this.lastSearch.id !== id) {
+            this.initSearchObj(id);
+            this.lastSearch.query = query;
+            this.lastSearch.stats.push({action: 'start', name: sourceName});
         }
-       return undefined;
+    }
+    searchRelayed(id,nodeName){
+        if (this.lastSearch.id !== id) {
+            this.initSearchObj(id);
+        }
+        this.lastSearch.stats.push({action:'relay',name: nodeName});
+    }
+    searchRevisited(id,nodeName){
+        if (this.lastSearch.id !== id) {
+            this.initSearchObj(id);
+        }
+        this.lastSearch.stats.push({action:'revisit',name: nodeName});
+    }
+    searchResponded(id,nodeName){
+        if (this.lastSearch.id !== id) {
+            this.initSearchObj(id);
+        }
+        this.lastSearch.stats.push({action:'respond',name: nodeName});
+    }
+    searchDiscarded(id,nodeName){
+        if (this.lastSearch.id !== id) {
+            this.initSearchObj(id);
+        }
+        this.lastSearch.stats.push({action:'discard',name: nodeName});
     }
 
     printStats(){
-        return JSON.stringify(this.searches);
+        return JSON.stringify(this.lastSearch);
     }
 }
 
