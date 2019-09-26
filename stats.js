@@ -48,11 +48,11 @@ class Stats {
             this.lastSearch.stats.push({action: 'start', name: sourceName});
         }
     }
-    searchRelayed(id,nodeName){
+    searchRelayed(id,nodeName,target_name){
         if (this.lastSearch.id !== id) {
             this.initSearchObj(id);
         }
-        this.lastSearch.stats.push({action:'relay',name: nodeName});
+        this.lastSearch.stats.push({action:'relay',name: nodeName, target_name});
     }
     searchRevisited(id,nodeName){
         if (this.lastSearch.id !== id) {

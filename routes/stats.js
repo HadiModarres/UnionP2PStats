@@ -10,7 +10,7 @@ router.get('/search_started', function(req, res, next) {
 });
 router.get('/search_relayed', function(req, res, next) {
   // console.log("relayd search");
-  stats.searchRelayed(req.query.id,req.query.node_name);
+  stats.searchRelayed(req.query.id,req.query.node_name,req.query.target_name);
   // console.info(stats.printStats());
   res.send('relay recorded');
 });
