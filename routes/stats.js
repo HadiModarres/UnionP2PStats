@@ -50,6 +50,25 @@ router.get('/last_search', function (req, res, next) {
   res.send(JSON.stringify(stats.lastSearch));
 });
 
+router.get('/link_changed', function (req, res, next) {
+    stats.linkChanged();
+  res.send("ok");
+});
+
+router.get('/link_changes', function (req, res, next) {
+  res.send(stats.getLinkChangeTimeWindow());
+});
+
+
+router.get('/node_stats', function (req, res, next) {
+  stats.nodeStats(JSON.parse(req.query.json));
+  res.send("ok");
+});
+
+router.get('/get_node_stats', function (req, res, next) {
+  res.send(JSON.stringify(stats.getNodeStats()));
+});
+
 
 
 

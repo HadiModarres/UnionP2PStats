@@ -1,14 +1,34 @@
+let TimeWindow = require("./TimeWindow");
+
 class Stats {
 
     constructor(){
        this.lastSearch = [];
        this.nodes = {};
+       this.linkChangeTimeWindow = new TimeWindow(50,4000);
+       this.nodeStatsArr = {};
+    }
+
+    linkChanged(){
+        this.linkChangeTimeWindow.increment();
+    }
+
+    getLinkChangeTimeWindow(){
+        return this.linkChangeTimeWindow.getCumulativeCounts();
     }
 
     neighborsUpdated(node){
         this.nodes[node.id] = node;
         // console.info(this.nodes);
     }
+
+    nodeStats(node){
+        this.nodeStatsArr[node.id] = node;
+    }
+    getNodeStats(){
+        return Object.values(this.nodeStatsArr);
+    }
+
     getNodes(){
         return Object.values(this.nodes);
     }
