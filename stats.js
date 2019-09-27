@@ -7,6 +7,22 @@ class Stats {
        this.nodes = {};
        this.linkChangeTimeWindow = new TimeWindow(50,4000);
        this.nodeStatsArr = {};
+       this._recyclePointers();
+    }
+
+    _recyclePointers(){
+        let freshPointers = Object.values(this.nodeStatsArr).filter((value => {
+            if (new Date().getTime() / 1000 - value.seconds <= 20) {
+                return true;
+            } else {
+                return false;
+            }
+        }));
+        this.nodeStatsArr = {};
+        for (let f of freshPointers){
+           this.nodeStatsArr[f.id] = f;
+        }
+       setTimeout(()=>{this._recyclePointers()},10000);
     }
 
     linkChanged(){
@@ -23,6 +39,7 @@ class Stats {
     }
 
     nodeStats(node){
+        node.seconds = new Date().getTime()/1000;
         this.nodeStatsArr[node.id] = node;
     }
     getNodeStats(){
