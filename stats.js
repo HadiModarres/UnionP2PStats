@@ -25,8 +25,10 @@ class Stats {
        setTimeout(()=>{this._recyclePointers()},10000);
     }
 
-    linkChanged(){
-        this.linkChangeTimeWindow.increment();
+    linkChanged(count){
+        for (let i=0;i<count;i++) {
+            this.linkChangeTimeWindow.increment();
+        }
     }
 
     getLinkChangeTimeWindow(){

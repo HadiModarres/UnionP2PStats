@@ -51,7 +51,7 @@ router.get('/last_search', function (req, res, next) {
 });
 
 router.get('/link_changed', function (req, res, next) {
-    stats.linkChanged();
+    stats.linkChanged(req.query.count);
   res.send("ok");
 });
 
